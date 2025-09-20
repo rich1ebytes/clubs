@@ -35,14 +35,24 @@ api.interceptors.response.use(
   (error) => {
     // Handle common error scenarios
     if (error.response?.status === 401) {
-      // Unauthorized - clear tokens and redirect to login
+      // Unauthorized - clear tokens and redirect to appropriate login
+      const adminToken = localStorage.getItem("adminToken");
+      const adminRole = localStorage.getItem("adminRole");
+      const isAdmin = adminToken && adminRole === "admin";
+
       localStorage.removeItem("userToken");
       localStorage.removeItem("adminToken");
       localStorage.removeItem("userEmail");
       localStorage.removeItem("adminRole");
       localStorage.removeItem("userRole");
       localStorage.removeItem("isAdmin");
-      window.location.href = "/for-clubs";
+
+      // Redirect to appropriate login page
+      if (isAdmin) {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/for-clubs";
+      }
     }
 
     if (error.response?.status === 403) {

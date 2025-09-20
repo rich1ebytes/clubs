@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiService } from "../services/api";
 
 export default function ClubManagement() {
@@ -12,6 +13,7 @@ export default function ClubManagement() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [editingAccountId, setEditingAccountId] = useState(null);
+  const navigate = useNavigate();
 
   const authToken = localStorage.getItem("adminToken"); // Assuming admin token is stored here
 
@@ -84,7 +86,7 @@ export default function ClubManagement() {
   const handleAdminLogout = () => {
     localStorage.removeItem("adminToken");
     localStorage.removeItem("adminRole");
-    window.location.href = "/admin";
+    navigate("/admin");
   };
 
   return (

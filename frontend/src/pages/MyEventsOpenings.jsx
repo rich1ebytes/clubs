@@ -41,15 +41,8 @@ const MyEventsOpenings = () => {
   const handleDeleteEvent = async (eventId) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
-        const response = await fetch(`/api/club-members/events/${eventId}`, {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-        if (response.ok) {
-          setEvents(events.filter((event) => event._id !== eventId));
-        } else {
-          console.error("Failed to delete event");
-        }
+        await apiService.events.delete(eventId);
+        setEvents(events.filter((event) => event._id !== eventId));
       } catch (error) {
         console.error("Error deleting event:", error);
       }
@@ -59,18 +52,8 @@ const MyEventsOpenings = () => {
   const handleDeleteOpening = async (openingId) => {
     if (window.confirm("Are you sure you want to delete this opening?")) {
       try {
-        const response = await fetch(
-          `/api/club-members/openings/${openingId}`,
-          {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${authToken}` },
-          }
-        );
-        if (response.ok) {
-          setOpenings(openings.filter((opening) => opening._id !== openingId));
-        } else {
-          console.error("Failed to delete opening");
-        }
+        await apiService.openings.delete(openingId);
+        setOpenings(openings.filter((opening) => opening._id !== openingId));
       } catch (error) {
         console.error("Error deleting opening:", error);
       }
